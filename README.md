@@ -1,1 +1,1 @@
-# CampusQ
+# CampusQ - Smart Campus Queue Management
