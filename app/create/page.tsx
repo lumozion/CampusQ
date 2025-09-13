@@ -43,66 +43,77 @@ export default function CreateQueuePage() {
   }
 
   return (
-    <div className="min-h-screen gradient-bg">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
+      <div className="relative z-10 container mx-auto px-4 py-12">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-2xl mx-auto"
+          transition={{ duration: 0.8 }}
+          className="max-w-3xl mx-auto"
         >
-          <Link href="/" className="inline-flex items-center text-primary-600 hover:text-primary-700 mb-8">
+          <Link href="/" className="inline-flex items-center text-purple-300 hover:text-purple-200 mb-8 transition-colors">
             <ArrowLeft className="w-5 h-5 mr-2" />
             Back to Home
           </Link>
 
-          <div className="card">
-            <div className="text-center mb-8">
-              <QrCode className="w-16 h-16 text-primary-500 mx-auto mb-4" />
-              <h1 className="text-3xl font-bold mb-2 text-gradient">Create New Queue</h1>
-              <p className="text-gray-600 dark:text-gray-300">
+          <div className="relative p-8 rounded-3xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 backdrop-blur-xl border border-purple-500/20">
+            <div className="text-center mb-10">
+              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <QrCode className="w-10 h-10 text-white" />
+              </div>
+              <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
+                Create New Queue
+              </h1>
+              <p className="text-gray-300 text-lg">
                 Set up a queue for your service counter
               </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium mb-2">Queue Title</label>
+                <label className="block text-sm font-medium mb-3 text-gray-200">Queue Title</label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   placeholder="e.g., Main Library Counter"
-                  className="input-field"
+                  className="w-full px-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Service Category</label>
+                <label className="block text-sm font-medium mb-4 text-gray-200">Service Category</label>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {Object.entries(SERVICE_CATEGORIES).map(([key, category]) => (
                     <motion.button
                       key={key}
                       type="button"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
                       onClick={() => setFormData({ ...formData, category: key as keyof typeof SERVICE_CATEGORIES })}
-                      className={`p-4 rounded-xl border-2 transition-all ${
+                      className={`p-6 rounded-2xl border transition-all duration-300 ${
                         formData.category === key
-                          ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 shadow-lg'
-                          : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 bg-white dark:bg-gray-800'
+                          ? 'border-purple-400 bg-purple-500/20 shadow-lg shadow-purple-500/25'
+                          : 'border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10'
                       }`}
                     >
-                      <div className="text-2xl mb-2">{category.icon}</div>
-                      <div className="font-medium text-sm">{category.name}</div>
+                      <div className="text-3xl mb-3">{category.icon}</div>
+                      <div className="font-semibold text-white">{category.name}</div>
                     </motion.button>
                   ))}
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">
-                  <Clock className="w-4 h-4 inline mr-1" />
+                <label className="block text-sm font-medium mb-3 text-gray-200">
+                  <Clock className="w-4 h-4 inline mr-2 text-purple-300" />
                   Estimated Time per Person (minutes)
                 </label>
                 <input
@@ -111,20 +122,20 @@ export default function CreateQueuePage() {
                   max="60"
                   value={formData.estimatedTimePerPerson}
                   onChange={(e) => setFormData({ ...formData, estimatedTimePerPerson: parseInt(e.target.value) })}
-                  className="input-field"
+                  className="w-full px-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all"
                 />
               </div>
 
               <motion.button
                 type="submit"
                 disabled={isCreating || !formData.title || !formData.category}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-4 px-6 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isCreating ? (
                   <div className="flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
                     Creating Queue...
                   </div>
                 ) : (
