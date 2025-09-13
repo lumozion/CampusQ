@@ -6,6 +6,7 @@ import { ArrowLeft, Users, Clock, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { Queue, QueueItem, PATIENCE_QUOTES } from '@/lib/types'
+import { supabase } from '@/lib/supabase'
 
 export default function JoinQueuePage() {
   const searchParams = useSearchParams()
@@ -25,9 +26,37 @@ export default function JoinQueuePage() {
   useEffect(() => {
     if (queueId) {
       fetchQueue()
-      const interval = setInterval(fetchQueue, 3000)
       
-      // Run cleanup on page load (client-side cleanup)
+      // Set up real-time subscription for queue changes
+      const subscription = supabase
+        .channel('queue-updates')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: 'queues',
+            filter: `id=eq.${queueId}`
+          },
+          (payload) => {
+            console.log('Queue update:', payload)
+            if (payload.eventType === 'DELETE') {
+              // Queue was closed, redirect after a moment
+              setTimeout(() => {
+                window.location.href = '/'
+              }, 2000)
+            } else {
+              // Queue was updated, refresh data
+              fetchQueue()
+            }
+          }
+        )
+        .subscribe()
+      
+      // Fallback polling
+      const interval = setInterval(fetchQueue, 5000)
+      
+      // Cleanup check
       const runCleanup = async () => {
         try {
           await fetch('/api/cleanup', { method: 'POST' })
@@ -37,7 +66,10 @@ export default function JoinQueuePage() {
       }
       runCleanup()
       
-      return () => clearInterval(interval)
+      return () => {
+        clearInterval(interval)
+        supabase.removeChannel(subscription)
+      }
     }
   }, [queueId])
 

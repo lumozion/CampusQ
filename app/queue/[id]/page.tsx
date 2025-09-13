@@ -8,6 +8,7 @@ import { useParams } from 'next/navigation'
 import { Queue, QueueItem } from '@/lib/types'
 import QRCodeDisplay from '@/components/QRCodeDisplay'
 import CloseQueueModal from '@/components/CloseQueueModal'
+import { supabase } from '@/lib/supabase'
 
 export default function QueueManagementPage() {
   const params = useParams()
@@ -18,9 +19,35 @@ export default function QueueManagementPage() {
 
   useEffect(() => {
     fetchQueue()
-    const interval = setInterval(fetchQueue, 2000) // Poll every 2 seconds
     
-    // Check for auto-cleanup when page loads and every hour
+    // Set up real-time subscription
+    const subscription = supabase
+      .channel('queue-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'queues',
+          filter: `id=eq.${queueId}`
+        },
+        (payload) => {
+          console.log('Real-time update:', payload)
+          if (payload.eventType === 'DELETE') {
+            // Queue was deleted, redirect to home
+            window.location.href = '/'
+          } else {
+            // Queue was updated, refresh data
+            fetchQueue()
+          }
+        }
+      )
+      .subscribe()
+    
+    // Fallback polling every 5 seconds
+    const interval = setInterval(fetchQueue, 5000)
+    
+    // Auto-cleanup check
     const runCleanup = async () => {
       try {
         await fetch('/api/cleanup', { method: 'POST' })
@@ -28,13 +55,11 @@ export default function QueueManagementPage() {
         console.error('Cleanup check failed:', error)
       }
     }
-    
-    runCleanup() // Run on page load
-    const cleanupInterval = setInterval(runCleanup, 60 * 60 * 1000) // Every hour
+    runCleanup()
     
     return () => {
       clearInterval(interval)
-      clearInterval(cleanupInterval)
+      supabase.removeChannel(subscription)
     }
   }, [queueId])
 
