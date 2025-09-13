@@ -1,5 +1,7 @@
 import './globals.css'
 import { Montserrat } from 'next/font/google'
+import { ThemeProvider } from '@/components/ThemeProvider'
+import ThemeToggle from '@/components/ThemeToggle'
 
 const montserrat = Montserrat({ 
   subsets: ['latin'],
@@ -23,8 +25,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
       </head>
-      <body className={`${montserrat.className} min-h-screen bg-white`}>
-        {children}
+      <body className={`${montserrat.className} min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300`}>
+        <ThemeProvider>
+          {children}
+          <ThemeToggle />
+        </ThemeProvider>
       </body>
     </html>
   )
