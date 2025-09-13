@@ -4,8 +4,7 @@ import Footer from '@/components/Footer'
 
 const montserrat = Montserrat({ 
   subsets: ['latin'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-  variable: '--font-montserrat'
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 })
 
 export const metadata = {
@@ -20,6 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full dark">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+      </head>
       <body className={`${montserrat.className} h-full flex flex-col bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900`}>
         <main className="flex-1">
           {children}
