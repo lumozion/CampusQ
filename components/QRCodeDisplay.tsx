@@ -20,84 +20,80 @@ export default function QRCodeDisplay({ queueId, title }: QRCodeDisplayProps) {
     setTimeout(() => setCopied(false), 2000)
   }
 
-  const handlePrint = () => {
-    // Generate QR code as data URL for reliable printing
-    import('qrcode').then(QRCode => {
-      QRCode.toDataURL(queueUrl, { width: 300, margin: 2 }, (err: any, url: string) => {
-        if (err) {
-          console.error('QR generation failed:', err)
-          return
-        }
-        
-        const printWindow = window.open('', '_blank')
-        if (printWindow) {
-          printWindow.document.write(`
-            <html>
-              <head>
-                <title>Queue QR Code - ${title}</title>
-                <style>
-                  @media print {
-                    body { margin: 0; padding: 20px; }
-                    .no-print { display: none; }
-                  }
-                  body { 
-                    font-family: Arial, sans-serif; 
-                    text-align: center; 
-                    padding: 40px;
-                    background: white;
-                  }
-                  .qr-container { 
-                    margin: 30px 0; 
-                    display: inline-block;
-                    padding: 20px;
-                    border: 2px solid #333;
-                    background: white;
-                  }
-                  h1 { 
-                    color: #333; 
-                    margin-bottom: 20px; 
-                    font-size: 32px; 
-                    font-weight: bold;
-                  }
-                  p { 
-                    color: #666; 
-                    margin-bottom: 20px; 
-                    font-size: 18px; 
-                  }
-                  .url { 
-                    font-size: 14px;
-                    word-break: break-all;
-                    margin-top: 30px;
-                    color: #333;
-                  }
-                  img { 
-                    display: block;
-                    margin: 0 auto;
-                  }
-                </style>
-              </head>
-              <body>
-                <h1>${title}</h1>
-                <p>Scan this QR code to join the queue</p>
-                <div class="qr-container">
-                  <img src="${url}" alt="QR Code" width="300" height="300" />
-                </div>
-                <p class="url"><strong>Or visit:</strong><br/>${queueUrl}</p>
-                <script>
-                  window.onload = () => {
-                    setTimeout(() => {
-                      window.print()
-                      window.close()
-                    }, 500)
-                  }
-                </script>
-              </body>
-            </html>
-          `)
-          printWindow.document.close()
-        }
-      })
-    })
+  const handlePrint = async () => {
+    try {
+      const QRCode = await import('qrcode')
+      const dataUrl = await QRCode.toDataURL(queueUrl, { width: 300, margin: 2 })
+      
+      const printWindow = window.open('', '_blank')
+      if (printWindow) {
+        printWindow.document.write(`
+          <html>
+            <head>
+              <title>Queue QR Code - ${title}</title>
+              <style>
+                @media print {
+                  body { margin: 0; padding: 20px; }
+                }
+                body { 
+                  font-family: Arial, sans-serif; 
+                  text-align: center; 
+                  padding: 40px;
+                  background: white;
+                }
+                .qr-container { 
+                  margin: 30px 0; 
+                  display: inline-block;
+                  padding: 20px;
+                  border: 2px solid #333;
+                  background: white;
+                }
+                h1 { 
+                  color: #333; 
+                  margin-bottom: 20px; 
+                  font-size: 32px; 
+                  font-weight: bold;
+                }
+                p { 
+                  color: #666; 
+                  margin-bottom: 20px; 
+                  font-size: 18px; 
+                }
+                .url { 
+                  font-size: 14px;
+                  word-break: break-all;
+                  margin-top: 30px;
+                  color: #333;
+                }
+                img { 
+                  display: block;
+                  margin: 0 auto;
+                }
+              </style>
+            </head>
+            <body>
+              <h1>${title}</h1>
+              <p>Scan this QR code to join the queue</p>
+              <div class="qr-container">
+                <img src="${dataUrl}" alt="QR Code" width="300" height="300" />
+              </div>
+              <p class="url"><strong>Or visit:</strong><br/>${queueUrl}</p>
+              <script>
+                window.onload = () => {
+                  setTimeout(() => {
+                    window.print()
+                    window.close()
+                  }, 500)
+                }
+              </script>
+            </body>
+          </html>
+        `)
+        printWindow.document.close()
+      }
+    } catch (error) {
+      console.error('Print failed:', error)
+    }
   }
 
   return (
