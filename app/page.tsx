@@ -38,32 +38,33 @@ export default function HomePage() {
             </div>
           </motion.div>
           
-          <h1 className="text-6xl md:text-8xl font-black mb-6 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent leading-tight tracking-tighter">
+          <h1 className="text-7xl md:text-9xl font-black mb-8 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent leading-none tracking-tighter">
             CampusQ
           </h1>
           
-          <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Revolutionary queue management for modern campuses. 
-            <span className="text-purple-300 font-semibold">No more waiting in lines!</span>
+          <p className="text-2xl md:text-3xl text-gray-200 mb-16 max-w-4xl mx-auto leading-relaxed font-light">
+            Revolutionary queue management for modern campuses.
+            <br className="hidden md:block" />
+            <span className="text-purple-300 font-medium">No more waiting in lines!</span>
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-400">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+          <div className="flex flex-wrap items-center justify-center gap-8 text-base text-gray-300 font-medium">
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
               <span>Real-time updates</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse delay-300"></div>
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse delay-300"></div>
               <span>No registration required</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse delay-700"></div>
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-purple-400 rounded-full animate-pulse delay-700"></div>
               <span>Free forever</span>
             </div>
           </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, x: -50, rotateY: -15 }}
             animate={{ opacity: 1, x: 0, rotateY: 0 }}
@@ -80,18 +81,18 @@ export default function HomePage() {
                     <QrCode className="w-8 h-8 text-white" />
                   </div>
                   
-                  <h3 className="text-3xl font-bold text-white mb-4 group-hover:text-purple-200 transition-colors tracking-tight">
+                  <h3 className="text-2xl font-bold text-white mb-6 group-hover:text-purple-200 transition-colors tracking-tight">
                     Create Queue
                   </h3>
                   
-                  <p className="text-gray-300 leading-relaxed mb-6">
+                  <p className="text-gray-300 leading-relaxed mb-8 text-lg">
                     Generate beautiful QR codes for your service counters. Perfect for libraries, canteens, and administrative offices.
                   </p>
                   
-                  <div className="flex items-center text-purple-300 font-medium group-hover:text-purple-200 transition-colors">
+                  <div className="flex items-center text-purple-300 font-semibold text-lg group-hover:text-purple-200 transition-colors">
                     <span>Get started</span>
                     <motion.div 
-                      className="ml-2"
+                      className="ml-3"
                       animate={{ x: [0, 5, 0] }}
                       transition={{ duration: 1.5, repeat: Infinity }}
                     >
@@ -119,18 +120,18 @@ export default function HomePage() {
                     <Users className="w-8 h-8 text-white" />
                   </div>
                   
-                  <h3 className="text-3xl font-bold text-white mb-4 group-hover:text-green-200 transition-colors tracking-tight">
+                  <h3 className="text-2xl font-bold text-white mb-6 group-hover:text-green-200 transition-colors tracking-tight">
                     Join Queue
                   </h3>
                   
-                  <p className="text-gray-300 leading-relaxed mb-6">
+                  <p className="text-gray-300 leading-relaxed mb-8 text-lg">
                     Scan QR codes to join queues instantly. Get real-time position updates and estimated wait times.
                   </p>
                   
-                  <div className="flex items-center text-green-300 font-medium group-hover:text-green-200 transition-colors">
+                  <div className="flex items-center text-green-300 font-semibold text-lg group-hover:text-green-200 transition-colors">
                     <span>Join now</span>
                     <motion.div 
-                      className="ml-2"
+                      className="ml-3"
                       animate={{ x: [0, 5, 0] }}
                       transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
                     >
