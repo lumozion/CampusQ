@@ -62,7 +62,11 @@ export const storage = {
     const queue = await storage.getQueue(queueId)
     if (!queue) return null
 
-    const newItem = { ...item, position: queue.items.length + 1 }
+    const newItem = { 
+      ...item, 
+      position: queue.items.length + 1,
+      timestamp: Date.now()
+    }
     const updatedItems = [...queue.items, newItem]
     
     const { data, error } = await supabase

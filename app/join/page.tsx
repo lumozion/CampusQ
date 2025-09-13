@@ -73,7 +73,11 @@ export default function JoinQueuePage() {
       const response = await fetch(`/api/queue/${queueId}/join`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({
+          ...formData,
+          id: Math.random().toString(36).substring(2, 15),
+          timestamp: Date.now()
+        })
       })
 
       if (response.ok) {
@@ -110,7 +114,8 @@ export default function JoinQueuePage() {
   }
 
   if (joined && userItem) {
-    const estimatedWaitTime = (userItem.position - 1) * queue.estimatedTimePerPerson
+    const currentPosition = queue.items.findIndex(item => item.id === userItem.id) + 1
+    const estimatedWaitTime = Math.max(0, (currentPosition - 1) * queue.estimatedTimePerPerson)
     
     return (
       <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -135,7 +140,7 @@ export default function JoinQueuePage() {
               </p>
 
               <div className="bg-gradient-to-r from-primary-500 to-green-500 text-white rounded-2xl p-6 mb-6">
-                <div className="text-4xl font-bold mb-2">#{userItem.position}</div>
+                <div className="text-4xl font-bold mb-2">#{currentPosition}</div>
                 <div className="text-sm opacity-90">Your queue number</div>
               </div>
 

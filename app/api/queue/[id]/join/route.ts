@@ -7,18 +7,18 @@ export async function POST(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { name, service, details } = await request.json()
+    const { name, service, details, id, timestamp } = await request.json()
 
     if (!name || !service) {
       return NextResponse.json({ error: 'Name and service are required' }, { status: 400 })
     }
 
     const queueItem: QueueItem = {
-      id: Math.random().toString(36).substring(2, 15),
+      id: id || Math.random().toString(36).substring(2, 15),
       name,
       service,
       details: details || '',
-      timestamp: Date.now(),
+      timestamp: timestamp || Date.now(),
       position: 0 // Will be set by storage.addToQueue
     }
 

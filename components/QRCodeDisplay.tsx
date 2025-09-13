@@ -21,31 +21,25 @@ export default function QRCodeDisplay({ queueId, title }: QRCodeDisplayProps) {
   }
 
   const handlePrint = () => {
-    const printWindow = window.open('', '_blank')
-    if (printWindow) {
-      printWindow.document.write(`
-        <html>
-          <head>
-            <title>Queue QR Code - ${title}</title>
-            <style>
-              body { font-family: Arial, sans-serif; text-align: center; padding: 40px; }
-              .qr-container { margin: 20px 0; }
-              h1 { color: #333; margin-bottom: 10px; }
-              p { color: #666; margin-bottom: 30px; }
-            </style>
-          </head>
-          <body>
-            <h1>${title}</h1>
-            <p>Scan to join the queue</p>
-            <div class="qr-container">
-              <svg width="300" height="300">${document.querySelector('.qr-code-svg')?.innerHTML}</svg>
-            </div>
-            <p>Or visit: ${queueUrl}</p>
-          </body>
-        </html>
-      `)
-      printWindow.document.close()
-      printWindow.print()
+    // Create print-friendly version
+    const originalContent = document.body.innerHTML
+    const qrElement = document.querySelector('.qr-code-svg')
+    
+    if (qrElement) {
+      const printContent = `
+        <div style="text-align: center; padding: 40px; font-family: Arial, sans-serif;">
+          <h1 style="font-size: 28px; margin-bottom: 20px; color: #333;">${title}</h1>
+          <p style="font-size: 18px; margin-bottom: 30px; color: #666;">Scan this QR code to join the queue</p>
+          <div style="display: inline-block; padding: 20px; border: 2px solid #333; background: white;">
+            ${qrElement.outerHTML}
+          </div>
+          <p style="font-size: 14px; margin-top: 30px; word-break: break-all;"><strong>Or visit:</strong><br/>${queueUrl}</p>
+        </div>
+      `
+      
+      document.body.innerHTML = printContent
+      window.print()
+      document.body.innerHTML = originalContent
     }
   }
 
@@ -58,13 +52,14 @@ export default function QRCodeDisplay({ queueId, title }: QRCodeDisplayProps) {
       <h3 className="text-xl font-bold mb-4">Queue QR Code</h3>
       
       <div className="bg-white p-6 rounded-xl inline-block mb-6">
-        <QRCode
-          value={queueUrl}
-          size={200}
-          level="M"
-          includeMargin
-          className="qr-code-svg"
-        />
+        <div className="qr-code-svg">
+          <QRCode
+            value={queueUrl}
+            size={200}
+            level="M"
+            includeMargin={true}
+          />
+        </div>
       </div>
 
       <p className="text-sm text-gray-600 dark:text-gray-300 mb-6">
