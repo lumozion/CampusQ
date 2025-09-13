@@ -1,6 +1,6 @@
 'use client'
 
-import { QRCodeSVG } from 'qrcode.react'
+import QRCode from 'qrcode.react'
 import { motion } from 'framer-motion'
 import { Download, Printer, Copy, Check } from 'lucide-react'
 import { useState } from 'react'
@@ -58,7 +58,7 @@ export default function QRCodeDisplay({ queueId, title }: QRCodeDisplayProps) {
       <h3 className="text-xl font-bold mb-4">Queue QR Code</h3>
       
       <div className="bg-white p-6 rounded-xl inline-block mb-6">
-        <QRCodeSVG
+        <QRCode
           value={queueUrl}
           size={200}
           level="M"
