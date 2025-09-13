@@ -50,9 +50,9 @@ export default function HomePage() {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="group w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
                 >
-                  <span className="flex items-center">
+                  <span className="flex items-center justify-center">
                     Create Queue
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </span>
@@ -63,7 +63,7 @@ export default function HomePage() {
                 onClick={() => setShowScanner(true)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="px-8 py-4 bg-white/70 backdrop-blur-sm border border-white/20 text-gray-700 font-semibold rounded-2xl hover:bg-white/90 transition-all duration-300"
+                className="w-full sm:w-auto px-8 py-4 bg-white/70 backdrop-blur-sm border border-white/20 text-gray-700 font-semibold rounded-2xl hover:bg-white/90 transition-all duration-300"
               >
                 Join Queue
               </motion.button>

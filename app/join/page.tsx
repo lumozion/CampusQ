@@ -241,27 +241,27 @@ export default function JoinQueuePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-md mx-auto"
+          className="max-w-sm sm:max-w-md mx-auto"
         >
           <Link href="/" className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-8">
             <ArrowLeft className="w-5 h-5 mr-2" />
             Back to Home
           </Link>
 
-          <div className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-xl">
-            <div className="text-center mb-8">
-              <div className="text-4xl mb-4">{queue.category === 'library' ? '📚' : queue.category === 'canteen' ? '🍽️' : '🎓'}</div>
-              <h1 className="text-2xl font-bold mb-2 text-gray-900">{queue.title}</h1>
-              <p className="text-gray-600">
+          <div className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-3xl p-6 sm:p-8 shadow-xl">
+            <div className="text-center mb-6 sm:mb-8">
+              <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">{queue.category === 'library' ? '📚' : queue.category === 'canteen' ? '🍽️' : '🎓'}</div>
+              <h1 className="text-xl sm:text-2xl font-bold mb-2 text-gray-900">{queue.title}</h1>
+              <p className="text-sm sm:text-base text-gray-600">
                 {queue.items.length} people currently in queue
               </p>
             </div>
 
-            <form onSubmit={handleJoinQueue} className="space-y-6">
+            <form onSubmit={handleJoinQueue} className="space-y-4 sm:space-y-6">
               <div>
                 <label className="block text-sm font-medium mb-2 text-gray-700">Your Name</label>
                 <input
@@ -269,7 +269,7 @@ export default function JoinQueuePage() {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Enter your full name"
-                  className="w-full px-4 py-3 rounded-xl bg-white/80 border border-gray-200 text-gray-900 placeholder-gray-500 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all"
+                  className="w-full px-3 sm:px-4 py-3 text-sm sm:text-base rounded-xl bg-white/80 border border-gray-200 text-gray-900 placeholder-gray-500 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all"
                   required
                 />
               </div>
@@ -279,7 +279,7 @@ export default function JoinQueuePage() {
                 <select
                   value={formData.service}
                   onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-white/80 border border-gray-200 text-gray-900 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all"
+                  className="w-full px-3 sm:px-4 py-3 text-sm sm:text-base rounded-xl bg-white/80 border border-gray-200 text-gray-900 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all"
                   required
                 >
                   <option value="">Select a service</option>
@@ -299,7 +299,7 @@ export default function JoinQueuePage() {
                   value={formData.details}
                   onChange={(e) => setFormData({ ...formData, details: e.target.value })}
                   placeholder="e.g., Book title, order number, etc."
-                  className="w-full px-4 py-3 rounded-xl bg-white/80 border border-gray-200 text-gray-900 placeholder-gray-500 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all"
+                  className="w-full px-3 sm:px-4 py-3 text-sm sm:text-base rounded-xl bg-white/80 border border-gray-200 text-gray-900 placeholder-gray-500 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all"
                 />
               </div>
 
@@ -308,7 +308,7 @@ export default function JoinQueuePage() {
                 disabled={joining || !formData.name || !formData.service}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-4 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-3 sm:py-4 px-4 sm:px-6 text-sm sm:text-base bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {joining ? (
                   <div className="flex items-center justify-center">

@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Camera, X, Zap } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import jsQR from 'jsqr'
 
 interface QRScannerProps {
   onClose: () => void
@@ -23,6 +24,12 @@ export default function QRScanner({ onClose }: QRScannerProps) {
     }
   }, [])
 
+  useEffect(() => {
+    if (scanning) {
+      scanQRCode()
+    }
+  }, [scanning])
+
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -30,8 +37,10 @@ export default function QRScanner({ onClose }: QRScannerProps) {
       })
       if (videoRef.current) {
         videoRef.current.srcObject = stream
-        setScanning(true)
-        scanQRCode()
+        videoRef.current.onloadedmetadata = () => {
+          setScanning(true)
+          scanQRCode()
+        }
       }
     } catch (err) {
       setError('Camera access denied. Please allow camera permissions.')
@@ -61,19 +70,29 @@ export default function QRScanner({ onClose }: QRScannerProps) {
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
 
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
-        
-        // Simple QR detection - look for URL patterns in mock scenario
-        // In production, use a proper QR code library like jsQR
-        const mockQRDetection = () => {
-          // Simulate QR code detection after 3 seconds
-          setTimeout(() => {
-            const mockQueueId = 'demo-queue-123'
-            router.push(`/join?id=${mockQueueId}`)
-          }, 3000)
-        }
+        const code = jsQR(imageData.data, imageData.width, imageData.height)
 
-        if (scanning) {
-          mockQRDetection()
+        if (code) {
+          console.log('QR Code detected:', code.data)
+          
+          // Extract queue ID from URL
+          try {
+            const url = new URL(code.data)
+            const queueId = url.searchParams.get('id') || url.pathname.split('/').pop()
+            
+            if (queueId) {
+              stopCamera()
+              onClose()
+              router.push(`/join?id=${queueId}`)
+              return
+            }
+          } catch {
+            // If not a URL, treat the whole string as queue ID
+            stopCamera()
+            onClose()
+            router.push(`/join?id=${code.data}`)
+            return
+          }
         }
       }
       
@@ -96,7 +115,7 @@ export default function QRScanner({ onClose }: QRScannerProps) {
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
-        className="relative w-full max-w-md bg-white/90 backdrop-blur-xl border border-white/20 rounded-3xl p-6 shadow-2xl"
+        className="relative w-full max-w-sm mx-4 bg-white/90 backdrop-blur-xl border border-white/20 rounded-3xl p-4 sm:p-6 shadow-2xl"
       >
         <button
           onClick={onClose}
@@ -105,12 +124,12 @@ export default function QRScanner({ onClose }: QRScannerProps) {
           <X className="w-5 h-5 text-gray-700" />
         </button>
 
-        <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <Camera className="w-8 h-8 text-white" />
+        <div className="text-center mb-4 sm:mb-6">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4">
+            <Camera className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Scan QR Code</h2>
-          <p className="text-gray-600">Point your camera at the queue QR code</p>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Scan QR Code</h2>
+          <p className="text-sm sm:text-base text-gray-600">Point your camera at the queue QR code</p>
         </div>
 
         {error ? (
@@ -133,16 +152,16 @@ export default function QRScanner({ onClose }: QRScannerProps) {
               autoPlay
               playsInline
               muted
-              className="w-full h-64 bg-gray-100 rounded-2xl object-cover"
+              className="w-full h-48 sm:h-64 bg-gray-100 rounded-2xl object-cover"
             />
             <canvas ref={canvasRef} className="hidden" />
             
             {/* Scanning Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="relative">
-                <div className="w-48 h-48 border-2 border-white/50 rounded-2xl"></div>
+                <div className="w-32 h-32 sm:w-48 sm:h-48 border-2 border-white/50 rounded-2xl"></div>
                 <motion.div
-                  animate={{ y: [0, 180, 0] }}
+                  animate={{ y: [0, 120, 0] }}
                   transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                   className="absolute top-2 left-2 right-2 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"
                 />
@@ -157,12 +176,12 @@ export default function QRScanner({ onClose }: QRScannerProps) {
           </div>
         )}
 
-        <div className="mt-6 text-center">
+        <div className="mt-4 sm:mt-6 text-center">
           <div className="flex items-center justify-center space-x-2 text-blue-600 mb-2">
             <Zap className="w-4 h-4" />
             <span className="text-sm font-medium">Scanning...</span>
           </div>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-500 px-2">
             Make sure the QR code is clearly visible and well-lit
           </p>
         </div>

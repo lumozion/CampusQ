@@ -167,22 +167,22 @@ export default function QueueManagementPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-8">
-        <Link href="/" className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-8">
-          <ArrowLeft className="w-5 h-5 mr-2" />
-          Back to Home
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <Link href="/" className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-6 sm:mb-8">
+          <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+          <span className="text-sm sm:text-base">Back to Home</span>
         </Link>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           <div className="lg:col-span-1">
             <QRCodeDisplay queueId={queueId} title={queue.title} />
             
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-3xl p-6 shadow-xl mt-6"
+              className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-3xl p-4 sm:p-6 shadow-xl mt-4 sm:mt-6"
             >
-              <h3 className="text-lg font-bold mb-4 text-gray-900">Queue Stats</h3>
+              <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4 text-gray-900">Queue Stats</h3>
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="flex items-center text-gray-700">
@@ -247,13 +247,13 @@ export default function QueueManagementPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-xl"
+              className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-3xl p-4 sm:p-6 lg:p-8 shadow-xl"
             >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">{queue.title}</h2>
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900">{queue.title}</h2>
                 <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-sm text-gray-600">Live</span>
+                  <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-xs sm:text-sm text-gray-600">Live</span>
                 </div>
               </div>
 
