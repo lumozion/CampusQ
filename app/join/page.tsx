@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { Queue, QueueItem, PATIENCE_QUOTES } from '@/lib/types'
 import { supabase } from '@/lib/supabase'
+import LoadingSpinner from '@/components/LoadingSpinner'
 
 export default function JoinQueuePage() {
   const searchParams = useSearchParams()
@@ -137,11 +138,7 @@ export default function JoinQueuePage() {
   }
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-      </div>
-    )
+    return <LoadingSpinner />
   }
 
   if (!queue) {
@@ -312,7 +309,11 @@ export default function JoinQueuePage() {
               >
                 {joining ? (
                   <div className="flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full mr-2"
+                    />
                     Joining Queue...
                   </div>
                 ) : (

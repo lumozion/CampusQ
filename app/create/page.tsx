@@ -135,7 +135,11 @@ export default function CreateQueuePage() {
               >
                 {isCreating ? (
                   <div className="flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full mr-3"
+                    />
                     Creating Queue...
                   </div>
                 ) : (
