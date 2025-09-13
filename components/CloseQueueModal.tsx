@@ -25,24 +25,24 @@ export default function CloseQueueModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
           onClick={onClose}
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-md w-full mx-4"
+            className="bg-white/90 backdrop-blur-xl border border-white/20 rounded-3xl p-6 max-w-md w-full mx-4 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center">
                 <AlertTriangle className="w-6 h-6 text-orange-500 mr-3" />
-                <h3 className="text-xl font-bold">Close Queue</h3>
+                <h3 className="text-xl font-bold text-gray-900">Close Queue</h3>
               </div>
               <button
                 onClick={onClose}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="text-gray-500 hover:text-gray-700 transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -50,17 +50,17 @@ export default function CloseQueueModal({
 
             {queueItemsCount > 0 ? (
               <div>
-                <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-4 mb-6">
-                  <p className="text-yellow-800 dark:text-yellow-200 font-medium mb-2">
+                <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-6">
+                  <p className="text-yellow-800 font-medium mb-2">
                     ⚠️ You have {queueItemsCount} people in your queue!
                   </p>
-                  <p className="text-yellow-700 dark:text-yellow-300 text-sm">
+                  <p className="text-yellow-700 text-sm">
                     We recommend downloading the queue data before closing to avoid losing information.
                   </p>
                 </div>
 
                 <div className="space-y-3 mb-6">
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                  <p className="text-sm text-gray-600 mb-3">
                     Choose an option:
                   </p>
                   
@@ -69,7 +69,7 @@ export default function CloseQueueModal({
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => onExport('csv')}
-                      className="flex items-center justify-center p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all"
+                      className="flex items-center justify-center p-3 bg-blue-50 border border-blue-200 rounded-xl text-blue-700 hover:bg-blue-100 transition-all"
                     >
                       <Download className="w-4 h-4 mr-2" />
                       Export CSV
@@ -79,7 +79,7 @@ export default function CloseQueueModal({
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => onExport('json')}
-                      className="flex items-center justify-center p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/30 transition-all"
+                      className="flex items-center justify-center p-3 bg-green-50 border border-green-200 rounded-xl text-green-700 hover:bg-green-100 transition-all"
                     >
                       <Download className="w-4 h-4 mr-2" />
                       Export JSON
@@ -92,7 +92,7 @@ export default function CloseQueueModal({
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={onClose}
-                    className="flex-1 py-3 px-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all"
+                    className="flex-1 py-3 px-4 bg-white/80 border border-gray-200 text-gray-800 rounded-xl font-medium hover:bg-white transition-all"
                   >
                     Cancel
                   </motion.button>
@@ -110,7 +110,7 @@ export default function CloseQueueModal({
               </div>
             ) : (
               <div>
-                <p className="text-gray-600 dark:text-gray-300 mb-6">
+                <p className="text-gray-600 mb-6">
                   Are you sure you want to close this queue? This action cannot be undone.
                 </p>
                 
@@ -119,7 +119,7 @@ export default function CloseQueueModal({
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={onClose}
-                    className="flex-1 py-3 px-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all"
+                    className="flex-1 py-3 px-4 bg-white/80 border border-gray-200 text-gray-800 rounded-xl font-medium hover:bg-white transition-all"
                   >
                     Cancel
                   </motion.button>
