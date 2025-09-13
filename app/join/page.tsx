@@ -162,47 +162,47 @@ export default function JoinQueuePage() {
     
     return (
       <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-indigo-100">
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-md mx-auto">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+          <div className="max-w-sm sm:max-w-md mx-auto">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-xl text-center"
+              className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-3xl p-6 sm:p-8 shadow-xl text-center"
             >
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                className="inline-block mb-6"
+                className="inline-block mb-4 sm:mb-6"
               >
-                <Sparkles className="w-16 h-16 text-green-500" />
+                <Sparkles className="w-12 h-12 sm:w-16 sm:h-16 text-green-500" />
               </motion.div>
 
-              <h1 className="text-3xl font-bold mb-2 text-gray-900">You're in!</h1>
-              <p className="text-gray-600 mb-8">
+              <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-gray-900">You're in!</h1>
+              <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8">
                 Welcome to {queue.title}
               </p>
 
-              <div className="bg-gradient-to-r from-blue-500 to-green-500 text-white rounded-2xl p-6 mb-6">
-                <div className="text-4xl font-bold mb-2">#{currentPosition}</div>
-                <div className="text-sm opacity-90">Your queue number</div>
+              <div className="bg-gradient-to-r from-blue-500 to-green-500 text-white rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6">
+                <div className="text-3xl sm:text-4xl font-bold mb-1 sm:mb-2">#{currentPosition}</div>
+                <div className="text-xs sm:text-sm opacity-90">Your queue number</div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                <div className="bg-white/80 rounded-xl p-4 border border-gray-200">
-                  <Users className="w-6 h-6 text-blue-500 mx-auto mb-2" />
-                  <div className="font-bold text-gray-900">{queue.items.length}</div>
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
+                <div className="bg-white/80 rounded-xl p-3 sm:p-4 border border-gray-200">
+                  <Users className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500 mx-auto mb-1 sm:mb-2" />
+                  <div className="text-lg sm:text-xl font-bold text-gray-900">{queue.items.length}</div>
                   <div className="text-xs text-gray-600">Total in queue</div>
                 </div>
-                <div className="bg-white/80 rounded-xl p-4 border border-gray-200">
-                  <Clock className="w-6 h-6 text-orange-500 mx-auto mb-2" />
-                  <div className="font-bold text-gray-900">{estimatedWaitTime}m</div>
+                <div className="bg-white/80 rounded-xl p-3 sm:p-4 border border-gray-200">
+                  <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500 mx-auto mb-1 sm:mb-2" />
+                  <div className="text-lg sm:text-xl font-bold text-gray-900">{estimatedWaitTime}m</div>
                   <div className="text-xs text-gray-600">Est. wait time</div>
                 </div>
               </div>
 
-              <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-6">
-                <h3 className="font-medium mb-2 text-gray-900">Your Request:</h3>
-                <p className="text-sm text-gray-700">
+              <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-3 sm:p-4 mb-4 sm:mb-6">
+                <h3 className="text-sm sm:text-base font-medium mb-2 text-gray-900">Your Request:</h3>
+                <p className="text-xs sm:text-sm text-gray-700">
                   <strong>{formData.service}</strong>
                   {formData.details && (
                     <span className="block text-gray-600 mt-1">
@@ -221,14 +221,14 @@ export default function JoinQueuePage() {
                   transition={{ duration: 0.5 }}
                   className="text-center"
                 >
-                  <p className="text-lg font-medium text-blue-600">
+                  <p className="text-base sm:text-lg font-medium text-blue-600 px-2">
                     {PATIENCE_QUOTES[currentQuote]}
                   </p>
                 </motion.div>
               </AnimatePresence>
 
-              <div className="mt-8 pt-6 border-t border-gray-200">
-                <p className="text-xs text-gray-500">
+              <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200">
+                <p className="text-xs text-gray-500 px-2">
                   This page updates automatically. Keep it open to see your progress!
                 </p>
               </div>
