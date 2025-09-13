@@ -1,6 +1,5 @@
 import './globals.css'
 import { Montserrat } from 'next/font/google'
-import Footer from '@/components/Footer'
 
 const montserrat = Montserrat({ 
   subsets: ['latin'],
@@ -26,7 +25,6 @@ export default function RootLayout({
       </head>
       <body className={`${montserrat.className} min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900`}>
         {children}
-        <Footer />
       </body>
     </html>
   )
