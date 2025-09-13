@@ -166,7 +166,7 @@ export default function QueueManagementPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen gradient-bg">
       <div className="container mx-auto px-4 py-8">
         <Link href="/" className="inline-flex items-center text-primary-600 hover:text-primary-700 mb-8">
           <ArrowLeft className="w-5 h-5 mr-2" />

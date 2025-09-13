@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen gradient-bg">
       <div className="container mx-auto px-4 py-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -22,7 +22,7 @@ export default function HomePage() {
             <Sparkles className="w-16 h-16 text-primary-500" />
           </motion.div>
           
-          <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent mb-6">
+          <h1 className="text-5xl md:text-7xl font-bold text-gradient mb-6">
             CampusQ
           </h1>
           
@@ -38,7 +38,7 @@ export default function HomePage() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <Link href="/create" className="block">
-              <div className="card hover:shadow-xl transform hover:scale-105 transition-all duration-300 cursor-pointer">
+              <div className="card hover:shadow-2xl transform hover:scale-105 transition-all duration-300 cursor-pointer glass-effect">
                 <QrCode className="w-12 h-12 text-primary-500 mb-4" />
                 <h3 className="text-2xl font-bold mb-3">Create Queue</h3>
                 <p className="text-gray-600 dark:text-gray-300">
@@ -54,7 +54,7 @@ export default function HomePage() {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <Link href="/join" className="block">
-              <div className="card hover:shadow-xl transform hover:scale-105 transition-all duration-300 cursor-pointer">
+              <div className="card hover:shadow-2xl transform hover:scale-105 transition-all duration-300 cursor-pointer glass-effect">
                 <Users className="w-12 h-12 text-green-500 mb-4" />
                 <h3 className="text-2xl font-bold mb-3">Join Queue</h3>
                 <p className="text-gray-600 dark:text-gray-300">

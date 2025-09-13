@@ -43,7 +43,7 @@ export default function CreateQueuePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen gradient-bg">
       <div className="container mx-auto px-4 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -58,7 +58,7 @@ export default function CreateQueuePage() {
           <div className="card">
             <div className="text-center mb-8">
               <QrCode className="w-16 h-16 text-primary-500 mx-auto mb-4" />
-              <h1 className="text-3xl font-bold mb-2">Create New Queue</h1>
+              <h1 className="text-3xl font-bold mb-2 text-gradient">Create New Queue</h1>
               <p className="text-gray-600 dark:text-gray-300">
                 Set up a queue for your service counter
               </p>
@@ -89,8 +89,8 @@ export default function CreateQueuePage() {
                       onClick={() => setFormData({ ...formData, category: key as keyof typeof SERVICE_CATEGORIES })}
                       className={`p-4 rounded-xl border-2 transition-all ${
                         formData.category === key
-                          ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                          : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
+                          ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 shadow-lg'
+                          : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 bg-white dark:bg-gray-800'
                       }`}
                     >
                       <div className="text-2xl mb-2">{category.icon}</div>
