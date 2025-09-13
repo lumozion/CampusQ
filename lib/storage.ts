@@ -5,26 +5,44 @@ export const storage = {
   createQueue: async (queue: Queue): Promise<Queue> => {
     const { data, error } = await supabase
       .from('queues')
-      .insert([queue])
+      .insert([{
+        id: queue.id,
+        title: queue.title,
+        category: queue.category,
+        services: queue.services,
+        items: queue.items,
+        isActive: queue.isActive,
+        createdAt: queue.createdAt,
+        estimatedTimePerPerson: queue.estimatedTimePerPerson
+      }])
       .select()
       .single()
     
-    if (error) throw error
-    return data
+    if (error) {
+      console.error('Supabase error:', error)
+      throw error
+    }
+    return {
+      ...data,
+      items: data.items || []
+    }
   },
 
   getQueue: async (id: string): Promise<Queue | null> => {
     const { data, error } = await supabase
       .from('queues')
-      .select('*, queue_items(*)')
+      .select('*')
       .eq('id', id)
       .single()
     
-    if (error) return null
+    if (error) {
+      console.error('Get queue error:', error)
+      return null
+    }
     
     return {
       ...data,
-      items: data.queue_items || []
+      items: data.items || []
     }
   },
 
@@ -41,45 +59,40 @@ export const storage = {
   },
 
   addToQueue: async (queueId: string, item: QueueItem): Promise<Queue | null> => {
-    // Get current queue to calculate position
     const queue = await storage.getQueue(queueId)
     if (!queue) return null
 
-    const newItem = { ...item, queue_id: queueId, position: queue.items.length + 1 }
+    const newItem = { ...item, position: queue.items.length + 1 }
+    const updatedItems = [...queue.items, newItem]
     
-    const { error } = await supabase
-      .from('queue_items')
-      .insert([newItem])
+    const { data, error } = await supabase
+      .from('queues')
+      .update({ items: updatedItems })
+      .eq('id', queueId)
+      .select()
+      .single()
     
     if (error) return null
-    return storage.getQueue(queueId)
+    return { ...data, items: data.items || [] }
   },
 
   removeFromQueue: async (queueId: string, itemId: string): Promise<Queue | null> => {
-    const { error } = await supabase
-      .from('queue_items')
-      .delete()
-      .eq('id', itemId)
+    const queue = await storage.getQueue(queueId)
+    if (!queue) return null
+
+    const updatedItems = queue.items
+      .filter(item => item.id !== itemId)
+      .map((item, index) => ({ ...item, position: index + 1 }))
+    
+    const { data, error } = await supabase
+      .from('queues')
+      .update({ items: updatedItems })
+      .eq('id', queueId)
+      .select()
+      .single()
     
     if (error) return null
-    
-    // Reorder positions
-    const queue = await storage.getQueue(queueId)
-    if (queue) {
-      const updates = queue.items.map((item, index) => ({
-        id: item.id,
-        position: index + 1
-      }))
-      
-      for (const update of updates) {
-        await supabase
-          .from('queue_items')
-          .update({ position: update.position })
-          .eq('id', update.id)
-      }
-    }
-    
-    return storage.getQueue(queueId)
+    return { ...data, items: data.items || [] }
   },
 
   deleteQueue: async (id: string): Promise<boolean> => {
@@ -97,6 +110,6 @@ export const storage = {
       .select('*')
     
     if (error) return []
-    return data
+    return data.map(queue => ({ ...queue, items: queue.items || [] }))
   }
 }
