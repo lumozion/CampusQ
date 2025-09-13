@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
       id: queueId,
       title,
       category,
-      services: SERVICE_CATEGORIES[category as keyof typeof SERVICE_CATEGORIES].services,
+      services: [...SERVICE_CATEGORIES[category as keyof typeof SERVICE_CATEGORIES].services],
       items: [],
       isActive: true,
       createdAt: Date.now(),
