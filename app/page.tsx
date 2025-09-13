@@ -1,10 +1,14 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { QrCode, Users, Heart, Github, Linkedin, ArrowRight, Zap, Shield, Clock } from 'lucide-react'
 import Link from 'next/link'
+import QRScanner from '@/components/QRScanner'
 
 export default function HomePage() {
+  const [showScanner, setShowScanner] = useState(false)
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       {/* Hero Section */}
@@ -55,15 +59,14 @@ export default function HomePage() {
                 </motion.button>
               </Link>
               
-              <Link href="/join">
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="px-8 py-4 bg-white/70 backdrop-blur-sm border border-white/20 text-gray-700 font-semibold rounded-2xl hover:bg-white/90 transition-all duration-300"
-                >
-                  Join Queue
-                </motion.button>
-              </Link>
+              <motion.button
+                onClick={() => setShowScanner(true)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-8 py-4 bg-white/70 backdrop-blur-sm border border-white/20 text-gray-700 font-semibold rounded-2xl hover:bg-white/90 transition-all duration-300"
+              >
+                Join Queue
+              </motion.button>
             </div>
 
             {/* Features */}
@@ -154,6 +157,12 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+      
+      <AnimatePresence>
+        {showScanner && (
+          <QRScanner onClose={() => setShowScanner(false)} />
+        )}
+      </AnimatePresence>
     </div>
   )
 }
