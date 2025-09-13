@@ -38,7 +38,7 @@ export default function HomePage() {
             </div>
           </motion.div>
           
-          <h1 className="text-6xl md:text-8xl font-black mb-6 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent leading-tight">
+          <h1 className="text-6xl md:text-8xl font-black mb-6 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent leading-tight tracking-tighter">
             CampusQ
           </h1>
           
@@ -80,7 +80,7 @@ export default function HomePage() {
                     <QrCode className="w-8 h-8 text-white" />
                   </div>
                   
-                  <h3 className="text-3xl font-bold text-white mb-4 group-hover:text-purple-200 transition-colors">
+                  <h3 className="text-3xl font-bold text-white mb-4 group-hover:text-purple-200 transition-colors tracking-tight">
                     Create Queue
                   </h3>
                   
@@ -119,7 +119,7 @@ export default function HomePage() {
                     <Users className="w-8 h-8 text-white" />
                   </div>
                   
-                  <h3 className="text-3xl font-bold text-white mb-4 group-hover:text-green-200 transition-colors">
+                  <h3 className="text-3xl font-bold text-white mb-4 group-hover:text-green-200 transition-colors tracking-tight">
                     Join Queue
                   </h3>
                   

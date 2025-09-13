@@ -1,8 +1,12 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
 import Footer from '@/components/Footer'
 
-const inter = Inter({ subsets: ['latin'] })
+const montserrat = Montserrat({ 
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-montserrat'
+})
 
 export const metadata = {
   title: 'CampusQ - Smart Campus Queue Management',
@@ -16,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full dark">
-      <body className={`${inter.className} h-full flex flex-col bg-slate-900`}>
+      <body className={`${montserrat.className} h-full flex flex-col bg-slate-900`}>
         <main className="flex-1">
           {children}
         </main>

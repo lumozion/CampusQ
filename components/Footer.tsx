@@ -8,15 +8,15 @@ export default function Footer() {
     <motion.footer
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="mt-16 py-8"
+      className="relative mt-20 py-12 bg-gradient-to-t from-slate-900 via-purple-900/30 to-transparent"
     >
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center space-y-4">
-          <div className="flex items-center space-x-2 text-gray-400">
+          <div className="flex items-center space-x-2 text-purple-200/80">
             <span className="text-sm">Made with</span>
-            <Heart className="w-4 h-4 text-red-400 animate-pulse" />
+            <Heart className="w-4 h-4 text-purple-400 animate-pulse" />
             <span className="text-sm">by</span>
-            <span className="font-medium text-gray-300">Ashwin Asthana</span>
+            <span className="font-semibold text-white">Ashwin Asthana</span>
           </div>
           
           <div className="flex items-center space-x-4">
@@ -26,10 +26,10 @@ export default function Footer() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+              className="p-2 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 transition-colors"
               aria-label="GitHub Profile"
             >
-              <Github className="w-4 h-4 text-gray-400" />
+              <Github className="w-4 h-4 text-purple-200" />
             </motion.a>
             
             <motion.a
@@ -38,14 +38,14 @@ export default function Footer() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+              className="p-2 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 transition-colors"
               aria-label="LinkedIn Profile"
             >
-              <Linkedin className="w-4 h-4 text-blue-400" />
+              <Linkedin className="w-4 h-4 text-blue-300" />
             </motion.a>
           </div>
           
-          <p className="text-xs text-gray-500 text-center">
+          <p className="text-xs text-purple-300/60 text-center">
             © 2024 CampusQ. Built for efficient campus queue management.
           </p>
         </div>
