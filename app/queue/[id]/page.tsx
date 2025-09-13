@@ -17,7 +17,20 @@ export default function QueueManagementPage() {
   useEffect(() => {
     fetchQueue()
     const interval = setInterval(fetchQueue, 2000) // Poll every 2 seconds
-    return () => clearInterval(interval)
+    
+    // Check for auto-cleanup every 5 minutes
+    const cleanupInterval = setInterval(async () => {
+      try {
+        await fetch('/api/cleanup', { method: 'POST' })
+      } catch (error) {
+        console.error('Cleanup check failed:', error)
+      }
+    }, 5 * 60 * 1000) // 5 minutes
+    
+    return () => {
+      clearInterval(interval)
+      clearInterval(cleanupInterval)
+    }
   }, [queueId])
 
   const fetchQueue = async () => {
@@ -83,13 +96,37 @@ export default function QueueManagementPage() {
   }
 
   const closeQueue = async () => {
-    if (confirm('Are you sure you want to close this queue? All data will be removed.')) {
-      try {
-        await fetch(`/api/queue/${queueId}`, { method: 'DELETE' })
-        window.location.href = '/'
-      } catch (error) {
-        console.error('Failed to close queue:', error)
+    if (queue && queue.items.length > 0) {
+      const shouldExport = confirm(
+        `You have ${queue.items.length} people in your queue. Would you like to download the data before closing? All data will be permanently deleted.`
+      )
+      
+      if (shouldExport) {
+        exportData('csv')
+        // Give time for download, then ask again
+        setTimeout(() => {
+          if (confirm('Data downloaded. Are you sure you want to close this queue? All data will be removed.')) {
+            deleteQueue()
+          }
+        }, 1000)
+      } else {
+        if (confirm('Are you sure you want to close this queue without saving data? All data will be permanently lost.')) {
+          deleteQueue()
+        }
       }
+    } else {
+      if (confirm('Are you sure you want to close this queue?')) {
+        deleteQueue()
+      }
+    }
+  }
+
+  const deleteQueue = async () => {
+    try {
+      await fetch(`/api/queue/${queueId}`, { method: 'DELETE' })
+      window.location.href = '/'
+    } catch (error) {
+      console.error('Failed to close queue:', error)
     }
   }
 
@@ -147,6 +184,14 @@ export default function QueueManagementPage() {
                     {queue.items.length * queue.estimatedTimePerPerson} min
                   </span>
                 </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-gray-500">
+                    Auto-closes in
+                  </span>
+                  <span className="text-xs font-bold text-orange-500">
+                    {Math.max(0, Math.floor((queue.createdAt + 15 * 60 * 60 * 1000 - Date.now()) / (60 * 60 * 1000)))}h {Math.max(0, Math.floor(((queue.createdAt + 15 * 60 * 60 * 1000 - Date.now()) % (60 * 60 * 1000)) / (60 * 1000)))}m
+                  </span>
+                </div>
               </div>
             </motion.div>
 
@@ -166,6 +211,14 @@ export default function QueueManagementPage() {
                   Export as JSON
                 </button>
               </div>
+              
+              {queue.items.length > 0 && (
+                <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl">
+                  <p className="text-xs text-yellow-700 dark:text-yellow-300 mb-2">
+                    💡 Tip: Download your data before closing to avoid losing queue information!
+                  </p>
+                </div>
+              )}
               
               <button onClick={closeQueue} className="w-full mt-4 bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-xl transition-all">
                 <Trash2 className="w-4 h-4 mr-2 inline" />
