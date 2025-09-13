@@ -57,39 +57,39 @@ export default function CreateQueuePage() {
           transition={{ duration: 0.8 }}
           className="max-w-3xl mx-auto"
         >
-          <Link href="/" className="inline-flex items-center text-purple-300 hover:text-purple-200 mb-8 transition-colors">
+          <Link href="/" className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-8 transition-colors">
             <ArrowLeft className="w-5 h-5 mr-2" />
             Back to Home
           </Link>
 
-          <div className="relative p-8 rounded-3xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 backdrop-blur-xl border border-purple-500/20">
+          <div className="relative p-8 rounded-3xl bg-white/60 backdrop-blur-xl border border-white/20 shadow-xl">
             <div className="text-center mb-10">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <QrCode className="w-10 h-10 text-white" />
               </div>
-              <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
+              <h1 className="text-4xl font-bold mb-4 text-gray-900">
                 Create New Queue
               </h1>
-              <p className="text-gray-300 text-lg">
+              <p className="text-gray-600 text-lg">
                 Set up a queue for your service counter
               </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium mb-3 text-gray-200">Queue Title</label>
+                <label className="block text-sm font-medium mb-3 text-gray-700">Queue Title</label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   placeholder="e.g., Main Library Counter"
-                  className="w-full px-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all"
+                  className="w-full px-4 py-4 rounded-xl bg-white/80 border border-gray-200 text-gray-900 placeholder-gray-500 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-4 text-gray-200">Service Category</label>
+                <label className="block text-sm font-medium mb-4 text-gray-700">Service Category</label>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {Object.entries(SERVICE_CATEGORIES).map(([key, category]) => (
                     <motion.button
@@ -100,20 +100,20 @@ export default function CreateQueuePage() {
                       onClick={() => setFormData({ ...formData, category: key as keyof typeof SERVICE_CATEGORIES })}
                       className={`p-6 rounded-2xl border transition-all duration-300 ${
                         formData.category === key
-                          ? 'border-purple-400 bg-purple-500/20 shadow-lg shadow-purple-500/25'
-                          : 'border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10'
+                          ? 'border-blue-400 bg-blue-50 shadow-lg shadow-blue-500/25'
+                          : 'border-gray-200 bg-white/80 hover:border-blue-200 hover:bg-blue-50/50'
                       }`}
                     >
                       <div className="text-3xl mb-3">{category.icon}</div>
-                      <div className="font-semibold text-white">{category.name}</div>
+                      <div className="font-semibold text-gray-900">{category.name}</div>
                     </motion.button>
                   ))}
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-3 text-gray-200">
-                  <Clock className="w-4 h-4 inline mr-2 text-purple-300" />
+                <label className="block text-sm font-medium mb-3 text-gray-700">
+                  <Clock className="w-4 h-4 inline mr-2 text-blue-600" />
                   Estimated Time per Person (minutes)
                 </label>
                 <input
@@ -122,7 +122,7 @@ export default function CreateQueuePage() {
                   max="60"
                   value={formData.estimatedTimePerPerson}
                   onChange={(e) => setFormData({ ...formData, estimatedTimePerPerson: parseInt(e.target.value) })}
-                  className="w-full px-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all"
+                  className="w-full px-4 py-4 rounded-xl bg-white/80 border border-gray-200 text-gray-900 placeholder-gray-500 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all"
                 />
               </div>
 
@@ -131,7 +131,7 @@ export default function CreateQueuePage() {
                 disabled={isCreating || !formData.title || !formData.category}
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-4 px-6 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-4 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isCreating ? (
                   <div className="flex items-center justify-center">

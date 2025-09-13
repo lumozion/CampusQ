@@ -148,18 +148,18 @@ export default function QueueManagementPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
       </div>
     )
   }
 
   if (!queue) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Queue Not Found</h1>
-          <Link href="/" className="btn-primary">Go Home</Link>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center">
+        <div className="text-center bg-white/60 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-xl">
+          <h1 className="text-2xl font-bold mb-4 text-gray-900">Queue Not Found</h1>
+          <Link href="/" className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all">Go Home</Link>
         </div>
       </div>
     )
@@ -168,7 +168,7 @@ export default function QueueManagementPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       <div className="container mx-auto px-4 py-8">
-        <Link href="/" className="inline-flex items-center text-primary-600 hover:text-primary-700 mb-8">
+        <Link href="/" className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-8">
           <ArrowLeft className="w-5 h-5 mr-2" />
           Back to Home
         </Link>
@@ -180,23 +180,23 @@ export default function QueueManagementPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="card mt-6"
+              className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-3xl p-6 shadow-xl mt-6"
             >
-              <h3 className="text-lg font-bold mb-4">Queue Stats</h3>
+              <h3 className="text-lg font-bold mb-4 text-gray-900">Queue Stats</h3>
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="flex items-center">
-                    <Users className="w-4 h-4 mr-2" />
+                  <span className="flex items-center text-gray-700">
+                    <Users className="w-4 h-4 mr-2 text-blue-600" />
                     People in queue
                   </span>
-                  <span className="font-bold">{queue.items.length}</span>
+                  <span className="font-bold text-gray-900">{queue.items.length}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="flex items-center">
-                    <Clock className="w-4 h-4 mr-2" />
+                  <span className="flex items-center text-gray-700">
+                    <Clock className="w-4 h-4 mr-2 text-blue-600" />
                     Est. wait time
                   </span>
-                  <span className="font-bold">
+                  <span className="font-bold text-gray-900">
                     {queue.items.length * queue.estimatedTimePerPerson} min
                   </span>
                 </div>
@@ -214,23 +214,23 @@ export default function QueueManagementPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="card mt-6"
+              className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-3xl p-6 shadow-xl mt-6"
             >
-              <h3 className="text-lg font-bold mb-4">Export Data</h3>
+              <h3 className="text-lg font-bold mb-4 text-gray-900">Export Data</h3>
               <div className="space-y-2">
-                <button onClick={() => exportData('csv')} className="w-full btn-secondary text-sm">
-                  <Download className="w-4 h-4 mr-2" />
+                <button onClick={() => exportData('csv')} className="w-full py-3 px-4 bg-white/80 border border-gray-200 text-gray-900 font-medium rounded-xl hover:bg-white transition-all text-sm">
+                  <Download className="w-4 h-4 mr-2 inline" />
                   Export as CSV
                 </button>
-                <button onClick={() => exportData('json')} className="w-full btn-secondary text-sm">
-                  <Download className="w-4 h-4 mr-2" />
+                <button onClick={() => exportData('json')} className="w-full py-3 px-4 bg-white/80 border border-gray-200 text-gray-900 font-medium rounded-xl hover:bg-white transition-all text-sm">
+                  <Download className="w-4 h-4 mr-2 inline" />
                   Export as JSON
                 </button>
               </div>
               
               {queue.items.length > 0 && (
-                <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl">
-                  <p className="text-xs text-yellow-700 dark:text-yellow-300 mb-2">
+                <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-xl">
+                  <p className="text-xs text-yellow-700 mb-2">
                     💡 Tip: Download your data before closing to avoid losing queue information!
                   </p>
                 </div>
@@ -247,13 +247,13 @@ export default function QueueManagementPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="card"
+              className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-xl"
             >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold">{queue.title}</h2>
+                <h2 className="text-2xl font-bold text-gray-900">{queue.title}</h2>
                 <div className="flex items-center space-x-2">
                   <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-sm text-gray-600 dark:text-gray-300">Live</span>
+                  <span className="text-sm text-gray-600">Live</span>
                 </div>
               </div>
 
@@ -271,15 +271,15 @@ export default function QueueManagementPage() {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-xl"
+                      className="flex items-center justify-between p-4 bg-white/80 border border-gray-200 rounded-xl"
                     >
                       <div className="flex items-center space-x-4">
-                        <div className="w-8 h-8 bg-primary-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                        <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
                           {item.position}
                         </div>
                         <div>
-                          <h4 className="font-medium">{item.name}</h4>
-                          <p className="text-sm text-gray-600 dark:text-gray-300">
+                          <h4 className="font-medium text-gray-900">{item.name}</h4>
+                          <p className="text-sm text-gray-600">
                             {item.service} {item.details && `• ${item.details}`}
                           </p>
                         </div>
