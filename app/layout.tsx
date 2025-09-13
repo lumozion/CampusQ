@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full dark">
-      <body className={`${montserrat.className} h-full flex flex-col bg-slate-900`}>
+      <body className={`${montserrat.className} h-full flex flex-col bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900`}>
         <main className="flex-1">
           {children}
         </main>
