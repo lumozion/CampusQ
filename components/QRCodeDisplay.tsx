@@ -100,11 +100,11 @@ export default function QRCodeDisplay({ queueId, title }: QRCodeDisplayProps) {
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="card text-center"
+      className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-3xl p-6 shadow-xl text-center"
     >
-      <h3 className="text-xl font-bold mb-4">Queue QR Code</h3>
+      <h3 className="text-xl font-bold mb-4 text-gray-900">Queue QR Code</h3>
       
-      <div className="bg-white p-6 rounded-xl inline-block mb-6">
+      <div className="bg-white p-6 rounded-xl inline-block mb-6 shadow-sm">
         <div className="qr-code-svg">
           <QRCode
             value={queueUrl}
@@ -115,7 +115,7 @@ export default function QRCodeDisplay({ queueId, title }: QRCodeDisplayProps) {
         </div>
       </div>
 
-      <p className="text-sm text-gray-600 dark:text-gray-300 mb-6">
+      <p className="text-sm text-gray-600 mb-6">
         Students can scan this QR code to join your queue
       </p>
 
@@ -124,7 +124,7 @@ export default function QRCodeDisplay({ queueId, title }: QRCodeDisplayProps) {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handlePrint}
-          className="btn-secondary flex items-center"
+          className="px-4 py-2 bg-white/80 border border-gray-200 text-gray-900 font-medium rounded-xl hover:bg-white transition-all flex items-center"
         >
           <Printer className="w-4 h-4 mr-2" />
           Print
@@ -134,7 +134,7 @@ export default function QRCodeDisplay({ queueId, title }: QRCodeDisplayProps) {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handleCopy}
-          className="btn-secondary flex items-center"
+          className="px-4 py-2 bg-white/80 border border-gray-200 text-gray-900 font-medium rounded-xl hover:bg-white transition-all flex items-center"
         >
           {copied ? (
             <>
