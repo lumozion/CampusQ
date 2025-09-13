@@ -166,22 +166,18 @@ export default function JoinQueuePage() {
               animate={{ opacity: 1, scale: 1 }}
               className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-3xl p-6 sm:p-8 shadow-xl text-center"
             >
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                className="inline-block mb-4 sm:mb-6"
-              >
-                <Sparkles className="w-12 h-12 sm:w-16 sm:h-16 text-green-500" />
-              </motion.div>
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+              </div>
 
               <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-gray-900">You're in!</h1>
               <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8">
                 Welcome to {queue.title}
               </p>
 
-              <div className="bg-gradient-to-r from-blue-500 to-green-500 text-white rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6">
-                <div className="text-3xl sm:text-4xl font-bold mb-1 sm:mb-2">#{currentPosition}</div>
-                <div className="text-xs sm:text-sm opacity-90">Your queue number</div>
+              <div className="bg-white/80 border-2 border-blue-200 rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6">
+                <div className="text-3xl sm:text-4xl font-bold mb-1 sm:mb-2 text-blue-600">#{currentPosition}</div>
+                <div className="text-xs sm:text-sm text-gray-600">Your queue number</div>
               </div>
 
               <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
