@@ -7,12 +7,14 @@ import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { Queue, QueueItem } from '@/lib/types'
 import QRCodeDisplay from '@/components/QRCodeDisplay'
+import CloseQueueModal from '@/components/CloseQueueModal'
 
 export default function QueueManagementPage() {
   const params = useParams()
   const queueId = params.id as string
   const [queue, setQueue] = useState<Queue | null>(null)
   const [loading, setLoading] = useState(true)
+  const [showCloseModal, setShowCloseModal] = useState(false)
 
   useEffect(() => {
     fetchQueue()
@@ -95,39 +97,25 @@ export default function QueueManagementPage() {
     }
   }
 
-  const closeQueue = async () => {
-    if (queue && queue.items.length > 0) {
-      const shouldExport = confirm(
-        `You have ${queue.items.length} people in your queue. Would you like to download the data before closing? All data will be permanently deleted.`
-      )
-      
-      if (shouldExport) {
-        exportData('csv')
-        // Give time for download, then ask again
-        setTimeout(() => {
-          if (confirm('Data downloaded. Are you sure you want to close this queue? All data will be removed.')) {
-            deleteQueue()
-          }
-        }, 1000)
-      } else {
-        if (confirm('Are you sure you want to close this queue without saving data? All data will be permanently lost.')) {
-          deleteQueue()
-        }
-      }
-    } else {
-      if (confirm('Are you sure you want to close this queue?')) {
-        deleteQueue()
-      }
-    }
+  const closeQueue = () => {
+    setShowCloseModal(true)
   }
 
-  const deleteQueue = async () => {
+  const handleCloseConfirm = async () => {
     try {
       await fetch(`/api/queue/${queueId}`, { method: 'DELETE' })
       window.location.href = '/'
     } catch (error) {
       console.error('Failed to close queue:', error)
     }
+  }
+
+  const handleExportAndClose = (format: 'csv' | 'json') => {
+    exportData(format)
+    // Give time for download
+    setTimeout(() => {
+      setShowCloseModal(false)
+    }, 1000)
   }
 
   if (loading) {
@@ -284,6 +272,14 @@ export default function QueueManagementPage() {
           </div>
         </div>
       </div>
+      
+      <CloseQueueModal
+        isOpen={showCloseModal}
+        onClose={() => setShowCloseModal(false)}
+        onConfirm={handleCloseConfirm}
+        onExport={handleExportAndClose}
+        queueItemsCount={queue?.items.length || 0}
+      />
     </div>
   )
 }

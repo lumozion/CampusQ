@@ -21,26 +21,83 @@ export default function QRCodeDisplay({ queueId, title }: QRCodeDisplayProps) {
   }
 
   const handlePrint = () => {
-    // Create print-friendly version
-    const originalContent = document.body.innerHTML
-    const qrElement = document.querySelector('.qr-code-svg')
-    
-    if (qrElement) {
-      const printContent = `
-        <div style="text-align: center; padding: 40px; font-family: Arial, sans-serif;">
-          <h1 style="font-size: 28px; margin-bottom: 20px; color: #333;">${title}</h1>
-          <p style="font-size: 18px; margin-bottom: 30px; color: #666;">Scan this QR code to join the queue</p>
-          <div style="display: inline-block; padding: 20px; border: 2px solid #333; background: white;">
-            ${qrElement.outerHTML}
-          </div>
-          <p style="font-size: 14px; margin-top: 30px; word-break: break-all;"><strong>Or visit:</strong><br/>${queueUrl}</p>
-        </div>
-      `
-      
-      document.body.innerHTML = printContent
-      window.print()
-      document.body.innerHTML = originalContent
-    }
+    // Generate QR code as data URL for reliable printing
+    import('qrcode').then(QRCode => {
+      QRCode.toDataURL(queueUrl, { width: 300, margin: 2 }, (err: any, url: string) => {
+        if (err) {
+          console.error('QR generation failed:', err)
+          return
+        }
+        
+        const printWindow = window.open('', '_blank')
+        if (printWindow) {
+          printWindow.document.write(`
+            <html>
+              <head>
+                <title>Queue QR Code - ${title}</title>
+                <style>
+                  @media print {
+                    body { margin: 0; padding: 20px; }
+                    .no-print { display: none; }
+                  }
+                  body { 
+                    font-family: Arial, sans-serif; 
+                    text-align: center; 
+                    padding: 40px;
+                    background: white;
+                  }
+                  .qr-container { 
+                    margin: 30px 0; 
+                    display: inline-block;
+                    padding: 20px;
+                    border: 2px solid #333;
+                    background: white;
+                  }
+                  h1 { 
+                    color: #333; 
+                    margin-bottom: 20px; 
+                    font-size: 32px; 
+                    font-weight: bold;
+                  }
+                  p { 
+                    color: #666; 
+                    margin-bottom: 20px; 
+                    font-size: 18px; 
+                  }
+                  .url { 
+                    font-size: 14px;
+                    word-break: break-all;
+                    margin-top: 30px;
+                    color: #333;
+                  }
+                  img { 
+                    display: block;
+                    margin: 0 auto;
+                  }
+                </style>
+              </head>
+              <body>
+                <h1>${title}</h1>
+                <p>Scan this QR code to join the queue</p>
+                <div class="qr-container">
+                  <img src="${url}" alt="QR Code" width="300" height="300" />
+                </div>
+                <p class="url"><strong>Or visit:</strong><br/>${queueUrl}</p>
+                <script>
+                  window.onload = () => {
+                    setTimeout(() => {
+                      window.print()
+                      window.close()
+                    }, 500)
+                  }
+                </script>
+              </body>
+            </html>
+          `)
+          printWindow.document.close()
+        }
+      })
+    })
   }
 
   return (
