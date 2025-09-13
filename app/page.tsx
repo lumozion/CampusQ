@@ -1,12 +1,12 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { QrCode, Users, Clock, Sparkles, Heart, Github, Linkedin } from 'lucide-react'
+import { QrCode, Users, Clock, Heart, Github, Linkedin } from 'lucide-react'
 import Link from 'next/link'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 dark:from-black dark:via-purple-950 dark:to-black relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-950 to-gray-900 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
@@ -21,22 +21,7 @@ export default function HomePage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <motion.div
-            animate={{ 
-              rotate: [0, 360],
-              scale: [1, 1.1, 1]
-            }}
-            transition={{ 
-              rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-              scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
-            }}
-            className="inline-block mb-8"
-          >
-            <div className="relative">
-              <Sparkles className="w-20 h-20 text-purple-400" />
-              <div className="absolute inset-0 w-20 h-20 bg-purple-400/20 rounded-full blur-xl"></div>
-            </div>
-          </motion.div>
+
           
           <h1 className="text-7xl md:text-9xl font-black mb-8 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent leading-none tracking-tighter">
             CampusQ
