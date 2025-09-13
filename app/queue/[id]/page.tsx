@@ -20,14 +20,17 @@ export default function QueueManagementPage() {
     fetchQueue()
     const interval = setInterval(fetchQueue, 2000) // Poll every 2 seconds
     
-    // Check for auto-cleanup every 5 minutes
-    const cleanupInterval = setInterval(async () => {
+    // Check for auto-cleanup when page loads and every hour
+    const runCleanup = async () => {
       try {
         await fetch('/api/cleanup', { method: 'POST' })
       } catch (error) {
         console.error('Cleanup check failed:', error)
       }
-    }, 5 * 60 * 1000) // 5 minutes
+    }
+    
+    runCleanup() // Run on page load
+    const cleanupInterval = setInterval(runCleanup, 60 * 60 * 1000) // Every hour
     
     return () => {
       clearInterval(interval)

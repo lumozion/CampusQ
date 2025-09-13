@@ -26,6 +26,17 @@ export default function JoinQueuePage() {
     if (queueId) {
       fetchQueue()
       const interval = setInterval(fetchQueue, 3000)
+      
+      // Run cleanup on page load (client-side cleanup)
+      const runCleanup = async () => {
+        try {
+          await fetch('/api/cleanup', { method: 'POST' })
+        } catch (error) {
+          console.error('Cleanup check failed:', error)
+        }
+      }
+      runCleanup()
+      
       return () => clearInterval(interval)
     }
   }, [queueId])
