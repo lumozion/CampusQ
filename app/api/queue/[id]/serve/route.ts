@@ -12,7 +12,7 @@ export async function POST(
       return NextResponse.json({ error: 'Item ID is required' }, { status: 400 })
     }
 
-    const updatedQueue = storage.removeFromQueue(params.id, itemId)
+    const updatedQueue = await storage.removeFromQueue(params.id, itemId)
     
     if (!updatedQueue) {
       return NextResponse.json({ error: 'Queue or item not found' }, { status: 404 })

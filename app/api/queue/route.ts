@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       estimatedTimePerPerson: estimatedTimePerPerson || 5
     }
 
-    const createdQueue = storage.createQueue(queue)
+    const createdQueue = await storage.createQueue(queue)
     return NextResponse.json(createdQueue)
   } catch (error) {
     return NextResponse.json({ error: 'Failed to create queue' }, { status: 500 })
@@ -35,13 +35,13 @@ export async function GET(request: NextRequest) {
   const id = searchParams.get('id')
 
   if (id) {
-    const queue = storage.getQueue(id)
+    const queue = await storage.getQueue(id)
     if (!queue) {
       return NextResponse.json({ error: 'Queue not found' }, { status: 404 })
     }
     return NextResponse.json(queue)
   }
 
-  const queues = storage.getAllQueues()
+  const queues = await storage.getAllQueues()
   return NextResponse.json(queues)
 }

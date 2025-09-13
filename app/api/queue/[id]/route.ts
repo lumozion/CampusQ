@@ -5,7 +5,7 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const queue = storage.getQueue(params.id)
+  const queue = await storage.getQueue(params.id)
   
   if (!queue) {
     return NextResponse.json({ error: 'Queue not found' }, { status: 404 })
@@ -18,7 +18,7 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const success = storage.deleteQueue(params.id)
+  const success = await storage.deleteQueue(params.id)
   
   if (!success) {
     return NextResponse.json({ error: 'Queue not found' }, { status: 404 })
@@ -33,7 +33,7 @@ export async function PATCH(
 ) {
   try {
     const updates = await request.json()
-    const updatedQueue = storage.updateQueue(params.id, updates)
+    const updatedQueue = await storage.updateQueue(params.id, updates)
     
     if (!updatedQueue) {
       return NextResponse.json({ error: 'Queue not found' }, { status: 404 })

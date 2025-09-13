@@ -22,7 +22,7 @@ export async function POST(
       position: 0 // Will be set by storage.addToQueue
     }
 
-    const updatedQueue = storage.addToQueue(params.id, queueItem)
+    const updatedQueue = await storage.addToQueue(params.id, queueItem)
     
     if (!updatedQueue) {
       return NextResponse.json({ error: 'Queue not found' }, { status: 404 })
