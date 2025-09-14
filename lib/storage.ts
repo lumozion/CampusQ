@@ -19,7 +19,7 @@ export const storage = {
       .single()
     
     if (error) {
-      console.error('Supabase error:', error)
+      console.error('Supabase error:', JSON.stringify(error))
       throw error
     }
     return {
@@ -36,7 +36,7 @@ export const storage = {
       .single()
     
     if (error) {
-      console.error('Get queue error:', error)
+      console.error('Get queue error:', JSON.stringify(error))
       return null
     }
     
@@ -54,8 +54,11 @@ export const storage = {
       .select()
       .single()
     
-    if (error) return null
-    return data
+    if (error) {
+      console.error('Update queue error:', JSON.stringify(error))
+      return null
+    }
+    return { ...data, items: data.items || [] }
   },
 
   addToQueue: async (queueId: string, item: QueueItem): Promise<Queue | null> => {

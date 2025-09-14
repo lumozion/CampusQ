@@ -40,7 +40,7 @@ export default function JoinQueuePage() {
             filter: `id=eq.${queueId}`
           },
           (payload) => {
-            console.log('Queue update:', payload)
+            console.log('Queue update received')
             if (payload.eventType === 'DELETE') {
               // Queue was closed, redirect after a moment
               setTimeout(() => {
@@ -119,7 +119,7 @@ export default function JoinQueuePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
-          id: Math.random().toString(36).substring(2, 15),
+          id: crypto.randomUUID(),
           timestamp: Date.now()
         })
       })

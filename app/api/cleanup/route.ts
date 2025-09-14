@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ 
         success: true, 
         deletedCount: oldQueues.length,
-        message: `Cleaned up ${oldQueues.length} old queues` 
+        message: 'Cleaned up old queues'
       })
     }
 

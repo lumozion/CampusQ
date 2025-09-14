@@ -6,10 +6,9 @@ import Link from 'next/link'
 
 interface QueueClosedNotificationProps {
   isVisible: boolean
-  onClose: () => void
 }
 
-export default function QueueClosedNotification({ isVisible, onClose }: QueueClosedNotificationProps) {
+export default function QueueClosedNotification({ isVisible }: QueueClosedNotificationProps) {
   if (!isVisible) return null
 
   return (

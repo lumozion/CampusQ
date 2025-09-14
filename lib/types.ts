@@ -7,10 +7,12 @@ export interface QueueItem {
   position: number
 }
 
+export type QueueCategory = keyof typeof SERVICE_CATEGORIES
+
 export interface Queue {
   id: string
   title: string
-  category: 'library' | 'canteen' | 'academic'
+  category: QueueCategory
   services: string[]
   items: QueueItem[]
   isActive: boolean

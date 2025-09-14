@@ -20,6 +20,7 @@ export async function POST(
 
     return NextResponse.json({ success: true, queue: updatedQueue })
   } catch (error) {
+    console.error('Serve customer error:', error)
     return NextResponse.json({ error: 'Failed to serve customer' }, { status: 500 })
   }
 }

@@ -14,7 +14,7 @@ export async function POST(
     }
 
     const queueItem: QueueItem = {
-      id: id || Math.random().toString(36).substring(2, 15),
+      id: id || crypto.randomUUID(),
       name,
       service,
       details: details || '',
@@ -30,6 +30,7 @@ export async function POST(
 
     return NextResponse.json(queueItem)
   } catch (error) {
+    console.error('Join queue error:', error)
     return NextResponse.json({ error: 'Failed to join queue' }, { status: 500 })
   }
 }

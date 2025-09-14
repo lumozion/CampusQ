@@ -5,7 +5,13 @@ import { Sun, Moon } from 'lucide-react'
 import { useTheme } from './ThemeProvider'
 
 export default function ThemeToggle() {
-  const { theme, toggleTheme } = useTheme()
+  const themeContext = useTheme()
+  
+  if (!themeContext) {
+    return null
+  }
+  
+  const { theme, toggleTheme } = themeContext
 
   return (
     <motion.button

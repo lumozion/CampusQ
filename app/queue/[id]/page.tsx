@@ -33,7 +33,7 @@ export default function QueueManagementPage() {
           filter: `id=eq.${queueId}`
         },
         (payload) => {
-          console.log('Real-time update:', payload)
+          console.log('Real-time update received')
           if (payload.eventType === 'DELETE') {
             // Queue was deleted, redirect to home
             window.location.href = '/'
@@ -98,9 +98,9 @@ export default function QueueManagementPage() {
 
     const data = queue.items.map(item => ({
       position: item.position,
-      name: item.name,
-      service: item.service,
-      details: item.details,
+      name: item.name.replace(/["\r\n]/g, ''),
+      service: item.service.replace(/["\r\n]/g, ''),
+      details: item.details.replace(/["\r\n]/g, ''),
       timestamp: new Date(item.timestamp).toLocaleString()
     }))
 

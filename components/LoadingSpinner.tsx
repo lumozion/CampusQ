@@ -2,6 +2,8 @@
 
 import { motion } from 'framer-motion'
 
+const DOTS_ARRAY = [0, 1, 2]
+
 export default function LoadingSpinner() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center">
@@ -20,7 +22,7 @@ export default function LoadingSpinner() {
 
         {/* Animated Dots */}
         <div className="flex items-center justify-center space-x-2 mb-6">
-          {[0, 1, 2].map((i) => (
+          {DOTS_ARRAY.map((i) => (
             <motion.div
               key={i}
               animate={{

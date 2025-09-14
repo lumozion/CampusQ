@@ -39,11 +39,20 @@ export default function QRScanner({ onClose }: QRScannerProps) {
         videoRef.current.srcObject = stream
         videoRef.current.onloadedmetadata = () => {
           setScanning(true)
-          scanQRCode()
         }
       }
     } catch (err) {
-      setError('Camera access denied. Please allow camera permissions.')
+      if (err instanceof Error) {
+        if (err.name === 'NotAllowedError') {
+          setError('Camera access denied. Please allow camera permissions.')
+        } else if (err.name === 'NotFoundError') {
+          setError('No camera found. Please connect a camera and try again.')
+        } else {
+          setError('Camera access failed. Please try again.')
+        }
+      } else {
+        setError('Camera access failed. Please try again.')
+      }
     }
   }
 
@@ -73,7 +82,7 @@ export default function QRScanner({ onClose }: QRScannerProps) {
         const code = jsQR(imageData.data, imageData.width, imageData.height)
 
         if (code) {
-          console.log('QR Code detected:', code.data)
+          console.log('QR Code detected:', code.data.replace(/[\r\n]/g, ''))
           
           // Extract queue ID from URL
           try {
